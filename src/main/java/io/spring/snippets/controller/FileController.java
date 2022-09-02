@@ -1,5 +1,7 @@
 package io.spring.snippets.controller;
 
+import io.spring.snippets.CustomException.*;
+import io.spring.snippets.File;
 import io.spring.snippets.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,13 +23,13 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public Map<String, String> upload(@RequestParam MultipartFile file) throws IOException {
-        return fileService.upload(file);
+    public Map<String, String> upload(@RequestParam String fileName, @RequestParam MultipartFile file) throws IOException, FileWithoutExtensionException {
+        return fileService.upload(new File(fileName, file));
     }
 
     @GetMapping(value = "/download/{fileName}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<byte[]> download(@PathVariable String fileName) throws IOException {
+    public ResponseEntity<byte[]> download(@PathVariable String fileName) throws IOException, FileWithoutExtensionException, FileNotFoundException {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileService.download(fileName));
@@ -35,7 +37,13 @@ public class FileController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map handleException(IOException exception) {
-        return Map.of("error", exception.getMessage());
+    public Map handleException(FileNotFoundException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map handleException(FileWithoutExtensionException ex) {
+        return Map.of("error", ex.getMessage());
     }
 }
