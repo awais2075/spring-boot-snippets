@@ -1,6 +1,6 @@
 package io.spring.snippets.controller;
 
-import io.spring.snippets.FileService;
+import io.spring.snippets.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

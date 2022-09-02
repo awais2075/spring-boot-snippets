@@ -1,4 +1,4 @@
-package io.spring.snippets;
+package io.spring.snippets.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
