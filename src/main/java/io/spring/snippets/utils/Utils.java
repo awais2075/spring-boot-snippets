@@ -1,6 +1,6 @@
-package io.spring.snippets.service.utils;
+package io.spring.snippets.utils;
 
-import io.spring.snippets.CustomException.*;
+import io.spring.snippets.exception.CustomException.*;
 import org.springframework.util.StringUtils;
 
 import java.util.Objects;

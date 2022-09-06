@@ -1,7 +1,9 @@
 package io.spring.snippets.controller;
 
-import io.spring.snippets.CustomException.*;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import io.spring.snippets.exception.CustomException.*;
 import io.spring.snippets.File;
+import io.spring.snippets.exception.CustomException;
 import io.spring.snippets.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,27 +25,27 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public Map<String, String> upload(@RequestParam String fileName, @RequestParam MultipartFile file) throws IOException, FileWithoutExtensionException {
+    public Map<String, String> upload(@RequestParam String fileName, @RequestParam MultipartFile file) throws IOException, FileWithoutExtensionException, CustomException.FileWithoutExtensionException {
         return fileService.upload(new File(fileName, file));
     }
 
-    @GetMapping(value = "/download/{fileName}")
+    @GetMapping(value = "/download")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<byte[]> download(@PathVariable String fileName) throws IOException, FileWithoutExtensionException, FileNotFoundException {
+    public ResponseEntity<byte[]> download(@RequestParam("fileName") String fileName) throws IOException {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileService.download(fileName));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map handleException(FileNotFoundException ex) {
+    public Map handleException(IOException ex) {
         return Map.of("error", ex.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(AmazonS3Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map handleException(FileWithoutExtensionException ex) {
+    public Map handleException(AmazonS3Exception ex) {
         return Map.of("error", ex.getMessage());
     }
 }

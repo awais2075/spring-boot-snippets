@@ -1,2 +1,5 @@
-file:
-  base-path: /tmp/files
+aws:
+  s3.config:
+    bucket-name: ${AWS_BUCKET_NAME}
+    secret-key: ${AWS_SECRET_KEY}
+    access-key: ${AWS_ACCESS_KEY}

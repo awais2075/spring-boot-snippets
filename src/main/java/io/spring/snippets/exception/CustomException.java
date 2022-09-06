@@ -1,4 +1,4 @@
-package io.spring.snippets;
+package io.spring.snippets.exception;
 
 public class CustomException {
 
