@@ -1,0 +1,13 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    queue: spring-boot-snippets-queue
+    exchange: spring-boot-snippets-topic-exchange
+    routing-key: spring-boot-snippets-routing-key
+file:
+  src-path: /tmp/src/
+  dest-path: /tmp/dest/
+  file-ext: .wav
