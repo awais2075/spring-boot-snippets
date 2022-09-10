@@ -11,3 +11,5 @@ file:
   src-path: /tmp/src/
   dest-path: /tmp/dest/
   file-ext: .wav
+cron:
+  publish-file: 5 0/1 * * * *
