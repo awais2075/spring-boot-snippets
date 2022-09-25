@@ -27,7 +27,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.redis.om</groupId>
+			<artifactId>redis-om-spring</artifactId>
+			<version>0.6.0</version>
+		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>snapshots-repo</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
